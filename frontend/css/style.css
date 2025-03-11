@@ -1,7 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+:root{
+    --logo-font: "Bangers", system-ui;
 }
 
 html{
@@ -11,19 +16,120 @@ html{
 body{
     min-height: 100vh;
     width: 100%;
-    background: url("/assets/images/mainbg.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    background-color: white;
     position: relative;
+    overflow-x: hidden;
+
+    
 }
 
-body::before
+
+/* General Styles */
+.orange{
+    color: #ff4500;
+}
+
+.green{
+    color: #00D407;
+}
+
+/* Header */
+header{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 30px 10px 30px;
+
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+}
+
+.logo > img
 {
-    content: "";
-    position: absolute;
+    height: 55px;
+    width: 55px;
+}
+
+.logo > .logo-text
+{
+    color: black;
+    font-family: var(--logo-font);
+
+}
+
+.logo > .logo-text > .warText
+{
+    position: relative;
+    animation: WarAnimation ease-in-out forwards 400ms;
+    opacity: 0;
+    display: inline-block;
+}
+
+nav > .socials
+{
+    list-style-type: none;
+    display: flex;
+    gap: 15px;
+}
+
+.socials > li{
+    cursor: pointer;
+
+}
+
+.socials > li > img{
+    transition: ease-in-out 500ms;
+}
+
+.socials > li:hover > img{
+    transform: scale(1.1);
+}
+
+main{
+    height: 650px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dummy-board
+{
+    width: 400px;
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(5 , auto);
+    grid-template-rows: repeat(5 , auto);
+    gap: 2px;
+    background-color: white;
+    border-top: 10px solid #00D407;
+    border-bottom: 10px solid #00D407;
+    border-right: 10px solid #FFA500;
+    border-left: 10px solid #FFA500;
+    transform: translateX(1000px);
+    animation: dummyBoardPulse infinite 2s  , dummyBoardEnter ease-in-out forwards 700ms;
+}
+
+.cell
+{
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.893);
-    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all ease-in 400ms;
+    font-family: monospace;
+    font-size: 1.5rem;
+    border: 1px solid black;
+}
+
+.cell:hover{
+    transform: scale(1.03);
+    animation: cellsToggleColor 1s ease-in-out infinite;
 }

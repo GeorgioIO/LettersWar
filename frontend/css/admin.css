@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --logo-font: "Inter", sans-serif;
+}
+
+
+/* html + body */
+html{
+    height: 100%;
+}
+
+body{
+    min-height: 100vh;
+    width: 100%;
+    background-color: white;
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+/* general styles */
+svg , path{
+    transition: ease-in 300ms;
+}
+
+/* Header */
+header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 30px 10px 30px;
+    border-bottom: 2px solid black;
+
+}
+
+header > h1{
+    font-family: var(--logo-font);
+}
+
+/* main */
+main{
+    display: grid;
+    grid-template-columns: 250px auto;
+    flex-grow: 1;
+}
+
+/* menu */
+.menu
+{
+    border-right: 2px solid black;
+    padding: 20px 10px;
+}
+
+.menu > ul{
+    list-style-type: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu > ul > li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: ease-in 300ms;
+    height: 50px;
+    position: relative;
+}
+
+.menu > ul > li:hover{
+    color: grey;
+}
+
+.menu > ul > li:hover svg{
+    fill: grey;
+}
+
+
+
+
+.menu > ul > li.active::after{
+    content: "";
+    width: 4px;
+    height: 100%;
+    background-color: black;
+    right: -10px;
+    position: absolute;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+
+.control{
+    border-bottom: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0px;
+}
+
+.control > ul{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    list-style: none;
+    width: 50%;
+}
+
+.control > ul > li{
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: monospace;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: ease-in-out 500ms;
+}
+
+.control > ul > li:hover{
+    text-decoration: underline;
+}
+
+.dashboard{
+    display: grid;
+    grid-template-rows: 60px auto;
+    grid-template-columns: 1fr;
+}
+
+.dashboard-header{
+    width: 100%;
+    display: grid;
+    grid-template-rows: 100px;
+    grid-template-columns: 100px repeat(4 , 200px);
+    gap: 15px;
+    padding: 20px 30px;
+}
+
+.dashboard-header > p{
+    font-family: monospace;
+    font-size: 1.35rem;
+    text-align: center;
+}
+
+.dashboard-body{
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    padding: 10px 0px;
+}
+
+.question{
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 100px repeat(4 , 200px) 200px;
+    gap: 15px;
+    padding: 0px 30px;
+    align-items: center;
+}
+
+.question > p{
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.10rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.question > .question-buttons{
+    display: flex;
+    justify-content: space-around;
+}
+
+.question-buttons > img{
+    cursor: pointer;
+    transition: ease-in 400ms;
+}
+
+.question-buttons > img:hover{
+    transform: scale(1.03);
+}
+
+
+.operation-panel{
+    position: absolute;
+    left: 0;
+    background-color: white;
+    border-right: 2px solid black;
+    width: auto;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: flex-start;
+    transform: translateX(-1000px);
+}
+
+.close-operation-panel{
+    position: absolute;
+    right: 0;
+    top: 10px;
+    background-color: black;
+    border-top-left-radius: .55rem;
+    border-bottom-left-radius: .55rem;
+    cursor: pointer;
+}
+
+.operation-panel .operation-title{
+    font-size: 1.20rem;
+    font-family: monospace;
+    font-weight: 900;
+    padding: 30px 30px 0px 30px;
+
+}
+
+.add-form{
+    display: grid;
+    grid-template-columns: 300px;
+    grid-template-rows: repeat(3 , 1fr);
+    gap: 25px;
+    padding: 0px 30px 0px 30px;
+
+}
+
+.add-form > div{
+    display: grid;
+    grid-template-rows: auto;
+    align-items: center;
+    grid-template-columns: 100px 200px;
+}
+
+.add-form > div > label{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.add-form > div > input{
+    border: 2px solid black;
+    height: 40px;
+    padding: 8px;
+    border-radius: .55rem;
+}
+
+.add-form button{
+    height: 30px;
+    background-color: black;
+    border-radius: .55rem;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    cursor: pointer;
+}
+
+.operation-screen{
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    width: 100%;
+    padding: 30px 30px 30px 30px;
+}
+
+.operation-screen > .operation-title{
+    padding: 0px;
+}

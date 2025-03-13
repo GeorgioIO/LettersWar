@@ -271,3 +271,10 @@ main{
 .operation-screen > .operation-title{
     padding: 0px;
 }
+
+.view-panel{
+    position: absolute;
+    width: 700px;
+    height: 400px;
+    /* to be continued later */
+}

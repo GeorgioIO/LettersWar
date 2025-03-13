@@ -26,7 +26,7 @@ deleteQuestionList.addEventListener("click" , () => {
         form.action = "../backend/delete_question.php";
         form.innerHTML = deleteForm;
         operationTitle.after(form);
-        document.querySelector("operationDelete").classList.add("addedOPA");
+        document.querySelector("operationDelete").classList.add("addedOPD");
     }
     else
     {
@@ -36,7 +36,7 @@ deleteQuestionList.addEventListener("click" , () => {
         form.action = "../backend/delete_question.php";
         form.innerHTML = deleteForm;
         operationTitle.after(form);
-        document.querySelector(".operationDelete").classList.add("addedOPA");
+        document.querySelector(".operationDelete").classList.add("addedOPD");
     }
 })
 
@@ -56,7 +56,7 @@ updateQuestionList.addEventListener("click" , () => {
         form.action = "../backend/update_question.php";
         form.innerHTML = updateForm;
         operationTitle.after(form);
-        document.querySelector(".operationUpdate").classList.add("addedOPA");
+        document.querySelector(".operationUpdate").classList.add("addedOPU");
     }
     else
     {
@@ -66,7 +66,7 @@ updateQuestionList.addEventListener("click" , () => {
         form.action = "../backend/update_question.php";
         form.innerHTML = updateForm;
         operationTitle.after(form);
-        document.querySelector(".operationUpdate").classList.add("addedOPA");
+        document.querySelector(".operationUpdate").classList.add("addedOPU");
     }
 
 })
@@ -87,7 +87,7 @@ addQuestionList.addEventListener("click" , () => {
             form.action = "../backend/add_question.php";
             form.innerHTML = addForm;
             operationTitle.after(form);
-            document.querySelector(".operationUpdate").classList.add("addedOPA");
+            document.querySelector(".operationAdd").classList.add("addedOPA");
     }
     else{
         const form = document.createElement("form");
@@ -129,7 +129,7 @@ const updateForm =
         `
             <div class="recordID">
                 <label for="recordId">ID</label>
-                <input type="text" minlength="0" maxlength="3" required id="recordID" name="recordId">
+                <input type="number" min="0" max="999" required id="recordID" name="recordId">
             </div>
             <div class="letter">
                 <label for="letter">Letter</label>

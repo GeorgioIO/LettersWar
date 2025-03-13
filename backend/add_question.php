@@ -24,7 +24,7 @@ if($stmt->execute())
 }
 else
 {
-    echo json_encode(['success' => false , 'message' => "Problem in addind question"]);
+    echo json_encode(['success' => false , 'message' => "Problem in adding question"]);
     exit;
 }
 

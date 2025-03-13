@@ -86,5 +86,8 @@
             <div class="operation-title">Logs :</div>
         </div>
     </div>
+    <!-- <div class="view-panel">
+        s
+    </div> -->
 </body>
 </html>

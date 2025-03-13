@@ -15,17 +15,17 @@ $stmt->bind_param("i" , $questionID);
 
 if($stmt->execute())
 {
-    echo json_encode(["success" => true , "message" => "Record deleted"]);
-    exit;
+    $response = ["success" => true , "message" => "Record deleted"];
 }
 else
 {
-    echo json_encode(["success" => false , "message" => "Error in deleting record"]);
-    exit;
+    $response = ["success" => false , "message" => "Error in deleting record"];
 }
 
 $stmt->close();
 $conn->close();
 
+echo json_encode($response);
+exit;
 
 ?>

@@ -11,6 +11,11 @@ document.body.addEventListener("click" , (event) => {
     {
         updateQuestion();
     }
+    else if(clickedElement.classList.contains("addedOPD"))
+    {
+        let questionID = document.getElementById("recordID").value;
+        deleteQuestion(questionID , "panel");
+    }
 })
 
 
@@ -100,7 +105,7 @@ function addQuestion(){
     }
 }
 
-function deleteQuestion(questionID)
+function deleteQuestion(questionID , source="record")
 {
     fetch("../backend/delete_question.php" , {
         method : "POST",
@@ -113,7 +118,23 @@ function deleteQuestion(questionID)
     })
     .then(response => response.json())
     .then(data => {
-        if(data.success)
+        if(source === "panel")
+        {
+            if(data.success)
+            {
+                console.log("error")
+                document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : Record is Deleted";
+                document.querySelector(".operation-screen .operation-title").style.color = "green";
+            }
+            else
+            {
+                document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : Record is not Deleted";
+                document.querySelector(".operation-screen .operation-title").style.color = "red";
+            }
+        }
+        else
+        {
+            if(data.success)
             {
                 console.log("record deleted");
             }
@@ -121,7 +142,9 @@ function deleteQuestion(questionID)
             {
                 console.log("Problem deleting record");
             }
+        }
     }).catch(error => {
         console.log(error);
     })
 }
+

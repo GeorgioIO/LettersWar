@@ -5,106 +5,179 @@ const closeOperationPanel = document.querySelector(".close-operation-panel");
 const operationPanel = document.querySelector(".operation-panel")
 
 
+
 function containsForm(element){
     return element.querySelector("form") !== null
 }
 
+function setResetButton()
+{
+    const operationResetButton = document.querySelector(".operationReset");
+    operationResetButton.addEventListener("click" , () => {
+        document.querySelector(".operation-form").reset();
+    })
+}
 
 deleteQuestionList.addEventListener("click" , () => {
-    operationPanel.classList.remove("hideOperationPanel");
-    operationPanel.classList.add("showOperationPanel");
-    const operationTitle = document.querySelector(".operation-panel .operation-title");
-    operationTitle.innerHTML = "Operation : Delete question";
-    
-    // Delete from
-    if(containsForm(operationPanel))
-    {
-        operationPanel.querySelector("form").remove();
-        const form = document.createElement("form");
-        form.classList.add("add-form");
-        form.method = "post";
-        form.action = "../backend/delete_question.php";
-        form.innerHTML = deleteForm;
-        operationTitle.after(form);
-        document.querySelector("operationDelete").classList.add("addedOPD");
-    }
-    else
-    {
-        const form = document.createElement("form");
-        form.classList.add("add-form");
-        form.method = "post";
-        form.action = "../backend/delete_question.php";
-        form.innerHTML = deleteForm;
-        operationTitle.after(form);
-        document.querySelector(".operationDelete").classList.add("addedOPD");
-    }
+   showForm("delete");
 })
 
 updateQuestionList.addEventListener("click" , () => {
-    operationPanel.classList.remove("hideOperationPanel");
-    operationPanel.classList.add("showOperationPanel");
-    const operationTitle = document.querySelector(".operation-panel .operation-title");
-    operationTitle.innerHTML = "Operation : Update question";
-    
-    // Update form
-    if(containsForm(operationPanel))
-    {
-        operationPanel.querySelector("form").remove();
-        const form = document.createElement("form");
-        form.classList.add("add-form");
-        form.method = "post";
-        form.action = "../backend/update_question.php";
-        form.innerHTML = updateForm;
-        operationTitle.after(form);
-        document.querySelector(".operationUpdate").classList.add("addedOPU");
-    }
-    else
-    {
-        const form = document.createElement("form");
-        form.classList.add("add-form");
-        form.method = "post";
-        form.action = "../backend/update_question.php";
-        form.innerHTML = updateForm;
-        operationTitle.after(form);
-        document.querySelector(".operationUpdate").classList.add("addedOPU");
-    }
-
+  showForm("update");
 })
 
 addQuestionList.addEventListener("click" , () => {
-    operationPanel.classList.remove("hideOperationPanel");
-    operationPanel.classList.add("showOperationPanel");
-    const operationTitle =  document.querySelector(".operation-panel .operation-title");
-    operationTitle.innerHTML = "Operation : Add question"
-    
-    // Add form
-    if(containsForm(operationPanel))
-    {
-            operationPanel.querySelector("form").remove();
-            const form = document.createElement("form");
-            form.classList.add("add-form");
-            form.method = "post";
-            form.action = "../backend/add_question.php";
-            form.innerHTML = addForm;
-            operationTitle.after(form);
-            document.querySelector(".operationAdd").classList.add("addedOPA");
-    }
-    else{
-        const form = document.createElement("form");
-        form.classList.add("add-form");
-        form.method = "post";
-        form.action = "../backend/add_question.php";
-        form.innerHTML = addForm;
-        operationTitle.after(form);
-        document.querySelector(".operationAdd").classList.add("addedOPA");
-    }
-
+  showForm("add");
 })
 
 closeOperationPanel.addEventListener("click" , () => {
     operationPanel.classList.remove("showOperationPanel");
     operationPanel.classList.add("hideOperationPanel");
 })
+
+async function showForm(type , source="bar" , id=0)
+{
+    if(type === "delete")
+    {
+        operationPanel.classList.remove("hideOperationPanel");
+        operationPanel.classList.add("showOperationPanel");
+        const operationTitle = document.querySelector(".operation-panel .operation-title");
+        operationTitle.innerHTML = "Operation : Delete question";
+        
+        // Delete from
+        if(containsForm(operationPanel))
+        {
+            operationPanel.querySelector("form").remove();
+            const form = document.createElement("form");
+            form.classList.add("operation-form");
+            form.method = "post";
+            form.action = "../backend/delete_question.php";
+            form.innerHTML = deleteForm;
+            operationTitle.after(form);
+            document.querySelector(".operationDelete").classList.add("addedOPD");
+        }
+        else
+        {
+            const form = document.createElement("form");
+            form.classList.add("operation-form");
+            form.method = "post";
+            form.action = "../backend/delete_question.php";
+            form.innerHTML = deleteForm;
+            operationTitle.after(form);
+            document.querySelector(".operationDelete").classList.add("addedOPD");
+        }
+    
+        setResetButton();
+    }
+    else if(type === "add")
+    {
+        operationPanel.classList.remove("hideOperationPanel");
+        operationPanel.classList.add("showOperationPanel");
+        const operationTitle =  document.querySelector(".operation-panel .operation-title");
+        operationTitle.innerHTML = "Operation : Add question"
+        
+        // Add form
+        if(containsForm(operationPanel))
+        {
+                operationPanel.querySelector("form").remove();
+                const form = document.createElement("form");
+                form.classList.add("operation-form");
+                form.method = "post";
+                form.action = "../backend/add_question.php";
+                form.innerHTML = addForm;
+                operationTitle.after(form);
+                document.querySelector(".operationAdd").classList.add("addedOPA");
+        }
+        else{
+            const form = document.createElement("form");
+            form.classList.add("operation-form");
+            form.method = "post";
+            form.action = "../backend/add_question.php";
+            form.innerHTML = addForm;
+            operationTitle.after(form);
+            document.querySelector(".operationAdd").classList.add("addedOPA");
+        }
+    
+        setResetButton();
+    }
+    else if(type === "update")
+    {
+        operationPanel.classList.remove("hideOperationPanel");
+        operationPanel.classList.add("showOperationPanel");
+        const operationTitle = document.querySelector(".operation-panel .operation-title");
+        operationTitle.innerHTML = "Operation : Update question";
+        
+        // Update form
+        if(containsForm(operationPanel))
+        {
+            operationPanel.querySelector("form").remove();
+            const form = document.createElement("form");
+            form.classList.add("operation-form");
+            form.method = "post";
+            form.action = "../backend/update_question.php";
+            form.innerHTML = updateForm;
+            operationTitle.after(form);
+            document.querySelector(".operationUpdate").classList.add("addedOPU");
+        }
+        else
+        {
+            const form = document.createElement("form");
+            form.classList.add("operation-form");
+            form.method = "post";
+            form.action = "../backend/update_question.php";
+            form.innerHTML = updateForm;
+            operationTitle.after(form);
+            document.querySelector(".operationUpdate").classList.add("addedOPU");
+        }
+        
+        if(source === "row")
+        {
+            let result = await fetchQuestion(id);
+            
+            if(result != null)
+            {
+                document.getElementById("recordID").value = result.data.question_id;
+                document.getElementById("letter").value = result.data.letter;
+
+                // to remove &quot; and the like...
+                const textarea = document.createElement("textarea");
+                textarea.innerHTML = result.data.question_text;
+                
+                document.getElementById("questionText").value = textarea.value
+                document.getElementById("questionAnswer").value = result.data.answer; 
+            }
+        }
+        setResetButton();
+    }
+}
+
+async function fetchQuestion(id)
+{
+    try 
+    {
+        const response = await fetch("../backend/fetch_question.php" , {
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams ({questionID : id,})
+        })
+
+        const data = await response.json();
+        if(data.success)
+        {
+            return data;
+        }
+        else
+        {
+            return null;
+        }
+    } catch(error) {
+        console.error("Error fetching question:", error);
+        return null;
+    }
+
+}
 
 
 const addForm = 
@@ -151,7 +224,7 @@ const deleteForm =
         `
             <div class="recordID">
                 <label for="recordId">ID</label>
-                <input type="text" minlength="0" maxlength="3" required id="recordID" name="recordId">
+                <input type="number" min="0" max="999" required id="recordID" name="recordId">
             </div>
             <button class="operationDelete">Delete Question</button>
             <button class="operationReset" type="reset">Reset</button>

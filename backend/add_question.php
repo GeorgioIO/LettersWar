@@ -19,15 +19,16 @@ $stmt->bind_param("sss" , $letter , $questionText , $answer);
 
 if($stmt->execute())
 {
-    echo json_encode(['success' => true , 'message' => "New question is added"]);
-    exit;
+    $response = ['success' => true , 'message' => "New question is added"];
 }
 else
 {
-    echo json_encode(['success' => false , 'message' => "Problem in adding question"]);
-    exit;
+    $response = ['success' => false , 'message' => "Problem in adding question"];
 }
 
 $stmt->close();
 $conn->close();
+
+echo json_encode($response);
+exit;
 ?>

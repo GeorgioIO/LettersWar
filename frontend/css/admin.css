@@ -224,7 +224,7 @@ main{
 
 }
 
-.add-form{
+.operation-form{
     display: grid;
     grid-template-columns: 300px;
     grid-template-rows: repeat(3 , 1fr);
@@ -233,25 +233,25 @@ main{
 
 }
 
-.add-form > div{
+.operation-form > div{
     display: grid;
     grid-template-rows: auto;
     align-items: center;
     grid-template-columns: 100px 200px;
 }
 
-.add-form > div > label{
+.operation-form > div > label{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.add-form > div > input{
+.operation-form > div > input{
     border: 2px solid black;
     height: 40px;
     padding: 8px;
     border-radius: .55rem;
 }
 
-.add-form button{
+.operation-form button{
     height: 30px;
     background-color: black;
     border-radius: .55rem;

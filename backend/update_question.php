@@ -21,16 +21,17 @@ $stmt->bind_param("sssi" , $letter , $questionText , $questionAnswer , $question
 
 if($stmt->execute())
 {
-    echo json_encode(["success" => true , "message" => "Record is updated"]);
-    exit;
+    $response = ["success" => true , "message" => "Record is updated"];
 }
 else
 {
-    echo json_encode(["success" => false , "message" => "Error updating record"]);
-    exit;
+    $response = ["success" => false , "message" => "Error updating record"];
 }
 
 
 $stmt->close();
 $conn->close();
+
+echo json_encode($response);
+exit;
 ?>

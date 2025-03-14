@@ -65,11 +65,11 @@
                                     <p> <?=$question['question_text']?> </p>
                                     <p> <?=$question['answer']?> </p>
                                     <div class="question-buttons">
-                                        <img src="../assets/images/setting-1-svgrepo-com.svg" alt="record update" onclick="showForm('update' , 'row' , <?= $question['question_id']?> )">
+                                        <img src="../assets/images/setting-1-svgrepo-com.svg" alt="record update" onclick="showForm('update' , 'row' , <?=htmlspecialchars($question['question_id'])?>)">
                                             
-                                        <img src="../assets/images/delete-3-svgrepo-com.svg" alt="delete record" onclick="deleteQuestion(<?= htmlspecialchars($question['question_id']) ?>)">
+                                        <img src="../assets/images/delete-3-svgrepo-com.svg" alt="delete record" onclick="deleteQuestion(<?=htmlspecialchars($question['question_id'])?>)">
 
-                                        <img src="../assets/images/view-eye-svgrepo-com.svg" alt="view record">
+                                        <img src="../assets/images/view-eye-svgrepo-com.svg" alt="view record" onclick="showForm('view' , 'row' , <?=htmlspecialchars($question['question_id'])?>)">
                                     </div>
                                 </div>
                             <?php $count++ ?>
@@ -86,8 +86,6 @@
             <div class="operation-title">Logs :</div>
         </div>
     </div>
-    <!-- <div class="view-panel">
-        s
-    </div> -->
+
 </body>
 </html>

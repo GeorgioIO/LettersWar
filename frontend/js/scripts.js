@@ -149,6 +149,52 @@ async function showForm(type , source="bar" , id=0)
         }
         setResetButton();
     }
+    else if(type === "view")
+    {
+        operationPanel.classList.remove("hideOperationPanel");
+        operationPanel.classList.add("showOperationPanel");
+        const operationTitle = document.querySelector(".operation-panel .operation-title");
+        operationTitle.innerHTML = "Operation : View question";
+        const operationScreen = document.querySelector(".operation-panel .operation-screen");
+        
+        if(operationScreen){
+            operationScreen.remove();
+        }
+        
+        // Update form
+        if(containsForm(operationPanel))
+        {
+            operationPanel.querySelector("form").remove();
+            const form = document.createElement("form");
+            form.classList.add("operation-form");
+            form.innerHTML = viewForm;
+            operationTitle.after(form);
+            
+        }
+        else
+        {
+            const form = document.createElement("form");
+            form.classList.add("operation-form");
+            form.innerHTML = viewForm;
+            operationTitle.after(form);
+        }
+        
+
+        let result = await fetchQuestion(id);
+        
+        if(result != null)
+        {
+            document.getElementById("recordID").value = result.data.question_id;
+            document.getElementById("letter").value = result.data.letter;
+
+            // to remove &quot; and the like...
+            const textarea = document.createElement("textarea");
+            textarea.innerHTML = result.data.question_text;
+            
+            document.getElementById("questionText").value = textarea.value
+            document.getElementById("questionAnswer").value = result.data.answer; 
+        }
+    }
 }
 
 async function fetchQuestion(id)
@@ -218,6 +264,26 @@ const updateForm =
             </div>
             <button class="operationUpdate">Update Question</button>
             <button class="operationReset" type="reset">Reset</button>
+        `;
+
+const viewForm = 
+        `
+            <div class="recordID">
+                <label for="recordId">ID</label>
+                <input type="number" min="0" max="999" required id="recordID" name="recordId" readonly>
+            </div>
+            <div class="letter">
+                <label for="letter">Letter</label>
+                <input type="text" minlength="0" maxlength="1" required id="letter" name="letter" readonly>
+            </div>
+            <div class="questionText">
+                <label for="questionText">Text</label>
+                <textarea required id="questionText" name="questionText" rows="4" cols="50" readonly></textarea>
+            </div>
+            <div class="answer">
+                <label for="questionAnswer">Answer</label>
+                <input type="text" required id="questionAnswer" name="questionAnswer" readonly>
+            </div>
         `;
 
 const deleteForm = 

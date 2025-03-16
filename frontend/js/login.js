@@ -1,0 +1,29 @@
+const submitBtn = document.getElementById("submitBtn");
+
+submitBtn.addEventListener("click" , (event) => {
+    event.preventDefault();
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+
+    fetch("../backend/user_validation.php" , {
+        method : "POST",
+        headers : {
+            "Content-Type" : "application/x-www-form-urlencoded",
+        },
+        body : new URLSearchParams ({
+            username : username,
+            password: password,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.loggingState == false)
+        {
+            document.querySelector(".message").innerHTML = "Wrong Credentials."
+        }
+        else
+        {
+            window.location.href = "../frontend/admin.php";
+        }
+    })
+})

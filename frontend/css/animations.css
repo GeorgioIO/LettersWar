@@ -63,6 +63,58 @@
     }
 }
 
+@keyframes showOperationMessage{
+    0%{
+        transform: translateY(-50px);
+    }
+    100%{
+        transform: translateY(0px);
+    }
+}
+
+@keyframes hideOperationMessage{
+    0%{
+        transform: translateY(0px);
+    }
+    100%{
+        transform: translateY(-50px);
+    }
+}
+
+@keyframes operationMessageBar {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 100%;
+    }
+}
+
+@keyframes logoAppear {
+    0%{
+        transform: translateX(-1000px);
+    }
+    50%{
+        transform: translateX(20px);
+    }
+    100%{
+        transform: translateX(0px);
+    }
+    
+}
+
+.operationMessageBar{
+    animation: operationMessageBar 800ms ease-in-out forwards;
+}
+
+
+.showOperationMessage{
+    animation: showOperationMessage 400ms ease-in-out forwards;
+}
+
+.hideOperationMessage{
+    animation: hideOperationMessage 400ms ease-in-out forwards;
+}
 
 .showOperationPanel{
     animation: showOperationPanel 400ms ease-in-out forwards;

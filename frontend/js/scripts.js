@@ -1,40 +1,88 @@
-const addQuestionList = document.getElementById("addBtnList");
-const updateQuestionList = document.getElementById("updateBtnList");
-const deleteQuestionList = document.getElementById("deleteBtnList");
 const closeOperationPanel = document.querySelector(".close-operation-panel");
 const operationPanel = document.querySelector(".operation-panel")
+const menuButtons = document.querySelectorAll(".menu ul li");
+const logOutBtn = document.getElementById("logOutBtn");
 
 
-
-function containsForm(element){
-    return element.querySelector("form") !== null
+// Ajax request to populate panel content by endpoint
+function loadPanel(page)
+{
+    fetch(page)
+    .then(response => response.text())
+    .then(data => {
+        document.querySelector(".panel").innerHTML = data;
+        initializeEventListeners();
+    })
+    .catch(error => console.log("error : " , error))
 }
 
-function setResetButton()
+// Onload dynamic generation of panel content
+document.addEventListener("DOMContentLoaded", function() {
+    loadPanel("../components/questions.php");
+});
+
+// Initliaze event listeners
+function initializeEventListeners()
 {
-    const operationResetButton = document.querySelector(".operationReset");
-    operationResetButton.addEventListener("click" , () => {
-        document.querySelector(".operation-form").reset();
+    let addQuestionList = document.getElementById("addBtnList");
+    let updateQuestionList = document.getElementById("updateBtnList");
+    let deleteQuestionList = document.getElementById("deleteBtnList");
+
+    deleteQuestionList.addEventListener("click" , () => {
+    showForm("delete");
+    })
+
+    updateQuestionList.addEventListener("click" , () => {
+    showForm("update");
+    })
+
+    addQuestionList.addEventListener("click" , () => {
+    showForm("add");
+    })
+
+    closeOperationPanel.addEventListener("click" , () => {
+        operationPanel.classList.remove("showOperationPanel");
+        operationPanel.classList.add("hideOperationPanel");
     })
 }
 
-deleteQuestionList.addEventListener("click" , () => {
-   showForm("delete");
+// Logout functionality
+logOutBtn.addEventListener("click" , () => {
+    fetch("../backend/logout.php")
+    .then(response => response.json())
+    .then(data => {
+        if(data.success)
+        {
+            window.location.href = "../frontend/login.php";
+        }
+        else
+        {
+            console.log("Logout failed:", data.message);
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
 })
 
-updateQuestionList.addEventListener("click" , () => {
-  showForm("update");
+
+// Toggle between panel sections 
+menuButtons.forEach(button => {
+    button.addEventListener("click" , (event) => {
+        menuButtons.forEach(button => button.classList.remove("active"));
+        event.currentTarget.classList.add("active");
+        if(event.currentTarget.dataset.page === "questions")
+        {
+            loadPanel("../components/questions.php");
+        }
+        else if(event.currentTarget.dataset.page === "statistics")
+        {
+            loadPanel("../components/statistics.php");
+        }
+    })
 })
 
-addQuestionList.addEventListener("click" , () => {
-  showForm("add");
-})
-
-closeOperationPanel.addEventListener("click" , () => {
-    operationPanel.classList.remove("showOperationPanel");
-    operationPanel.classList.add("hideOperationPanel");
-})
-
+// Function to show form in side panel
 async function showForm(type , source="bar" , id=0)
 {
     if(type === "delete")
@@ -155,12 +203,9 @@ async function showForm(type , source="bar" , id=0)
         operationPanel.classList.add("showOperationPanel");
         const operationTitle = document.querySelector(".operation-panel .operation-title");
         operationTitle.innerHTML = "Operation : View question";
-        const operationScreen = document.querySelector(".operation-panel .operation-screen");
+        const operationScreenText = document.querySelector(".operation-panel .operation-screen .operation-title");
         
-        if(operationScreen){
-            operationScreen.remove();
-        }
-        
+
         // Update form
         if(containsForm(operationPanel))
         {
@@ -192,8 +237,9 @@ async function showForm(type , source="bar" , id=0)
             textarea.innerHTML = result.data.question_text;
             
             document.getElementById("questionText").value = textarea.value
-            document.getElementById("questionAnswer").value = result.data.answer; 
+            document.getElementById("questionAnswer").value = result.data.answer;
         }
+       
     }
 }
 
@@ -295,3 +341,17 @@ const deleteForm =
             <button class="operationDelete">Delete Question</button>
             <button class="operationReset" type="reset">Reset</button>
         `;
+
+function containsForm(element){
+    return element.querySelector("form") !== null
+}
+
+function setResetButton()
+{
+    const operationResetButton = document.querySelector(".operationReset");
+    operationResetButton.addEventListener("click" , () => {
+        document.querySelector(".operation-form").reset();
+        document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : ";
+        document.querySelector(".operation-screen .operation-title").style.color = "black";
+    })
+}

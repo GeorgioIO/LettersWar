@@ -26,9 +26,9 @@ function updateQuestion(){
     let answer = document.getElementById("questionAnswer"); 
     
     if(letter.value === "" || questionID.value === "" || questionText.value === "" || answer.value === ""){
-        document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : Fields can't be empty";
+        showLogsError("Fields can't be empty");
         setTimeout(() => {
-            document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : ";
+            resetLogsScreen();
         }, 1500);
     }
     else{
@@ -47,16 +47,14 @@ function updateQuestion(){
         .then(response => response.json())
         .then(data => {
             if(data.success){
-                document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : Record is update";
-                document.querySelector(".operation-screen .operation-title").style.color = "green";
+                showLogsSuccess(data.message);
+                reloadQuestions();
             }
             else{
-                document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : Record is not updated";
-                document.querySelector(".operation-screen .operation-title").style.color = "red";
+                showLogsError(data.message);
             }
         }).catch(error => {
-            console.log("error : " , error);
-            document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : " + error;
+            showLogsError(error);
         })
     }
 
@@ -68,9 +66,9 @@ function addQuestion(){
     let answer = document.getElementById("questionAnswer");
     if(letter.value === "" || questionText.value === "" || answer.value === "")
     {
-        document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : Fields can't be empty";
+        showLogsError("Fields can't be empty");
         setTimeout(() => {
-            document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : ";
+            resetLogsScreen();
         }, 1500);
     }
     else
@@ -90,17 +88,15 @@ function addQuestion(){
         .then(data => {
             if(data.success)
             {
-                document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : Record is added";
-                document.querySelector(".operation-screen .operation-title").style.color = "green";
+                showLogsSuccess(data.message)
+                reloadQuestions();
             }
             else
             {
-                document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : Record is not added";
-                document.querySelector(".operation-screen .operation-title").style.color = "red";
+                showLogsError(data.message);
             }
         }).catch(error => {
-            console.log("error : " , error);
-            document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : " + error;
+            showLogsError(error);
         })
     }
 }
@@ -122,29 +118,109 @@ function deleteQuestion(questionID , source="record")
         {
             if(data.success)
             {
-                console.log("error")
-                document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : Record is Deleted";
-                document.querySelector(".operation-screen .operation-title").style.color = "green";
+                showLogsSuccess(data.message);
+                reloadQuestions();
             }
             else
             {
-                document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : Record is not Deleted";
-                document.querySelector(".operation-screen .operation-title").style.color = "red";
+                showLogsError(data.message);
             }
         }
         else
         {
             if(data.success)
             {
-                console.log("record deleted");
+                toggleOperationMessage(data.message);
+                reloadQuestions();
             }
             else
             {
-                console.log("Problem deleting record");
+                showLogsError(data.message);
             }
         }
     }).catch(error => {
-        console.log(error);
+        showLogsError(data.message);
     })
 }
 
+function reloadQuestions()
+{
+    fetch("../backend/get_questions_ajax.php")
+    .then(response => response.json())
+    .then(data => {
+        if(data.success)
+        {
+            let dashboardBody = document.querySelector(".dashboard-body");
+            dashboardBody.innerHTML = "";
+            let count = 1;
+            data.questions.forEach(question => {
+                const questionElement = document.createElement("div");
+                questionElement.classList.add("question");
+                questionElement.innerHTML = `
+                <p>${count}</p>
+                <p>${question.question_id}</p>
+                <p>${question.letter}</p>
+                <p>${question.question_text}</p>
+                <p>${question.answer}</p>
+                <div class="question-buttons">
+                    <img src="../assets/images/setting-1-svgrepo-com.svg" alt="record update" onclick="showForm('update', 'row', ${question.question_id})">
+                    <img src="../assets/images/delete-3-svgrepo-com.svg" alt="delete record" onclick="deleteQuestion(${question.question_id})">
+                    <img src="../assets/images/view-eye-svgrepo-com.svg" alt="view record" onclick="showForm('view', 'row', ${question.question_id})">
+                </div>
+            `;
+            dashboardBody.appendChild(questionElement);
+            count++;
+            });
+        }
+        else
+        {
+            console.log("failed to reload questions");
+        }
+        
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
+
+function toggleOperationMessage(text , type)
+{
+    const operationMessage = document.querySelector(".operation-message");
+    operationMessage.innerHTML = text;
+    operationMessage.classList.remove("hideOperationMessage");
+    operationMessage.classList.add("showOperationMessage");
+
+    if(type === "delete")
+    {
+        operationMessage.style.backgroundcolor = "red";
+    }
+
+    // after how many seconds bar will start appearing
+    setTimeout(() => {
+        operationMessage.classList.add("bar");
+    }, 300)
+
+    // after how many seconds i want the bar to hide
+    setTimeout(() => {
+        operationMessage.classList.remove("bar");
+        operationMessage.classList.add("hideOperationMessage");
+    }, 2500)
+}
+
+function showLogsError(text)
+{
+    document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : " + text;
+    document.querySelector(".operation-screen .operation-title").style.color = "red";
+}
+
+function showLogsSuccess(text)
+{
+    document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : " + text;
+    document.querySelector(".operation-screen .operation-title").style.color = "green";
+}
+
+function resetLogsScreen()
+{
+    document.querySelector(".operation-screen .operation-title").innerHTML = "Logs : ";
+    document.querySelector(".operation-screen .operation-title").style.color = "black";
+}

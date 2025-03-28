@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --logo-font: "Bangers", system-ui;
+    --gameplay-font : "Roboto", sans-serif;
+    --green: #00D407;
+    --orange:#FFA500 ;
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+    padding: 0px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+main
+{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    
+}
+
+.board
+{
+    width: 400px;
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(5 , auto);
+    grid-template-rows: repeat(5 , auto);
+    gap: 2px;
+    background-color: white;
+    border-top: 10px solid #00D407;
+    border-bottom: 10px solid #00D407;
+    border-right: 10px solid #FFA500;
+    border-left: 10px solid #FFA500;
+    border-radius: .75rem;
+}
+
+.cell
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all ease-in 400ms;
+    font-family: monospace;
+    font-size: 1.5rem;
+    border: 1px solid black;
+}
+
+
+
+.turn > p{
+    font-weight: bold;
+    font-size: 1.10rem;
+    font-family: var(--gameplay-font);
+}
+
+.screen{
+    border: 3px solid black;
+    border-radius: .55rem;
+    width: 650px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.play-section
+{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(800px);
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.screen > .play-section > #question{
+    text-align: center;
+    font-family: var(--gameplay-font);
+    font-weight: 800;
+    max-width: 50ch;
+}
+
+.screen > .play-section > #answer{
+    width: 180px;
+    height: 30px;
+    border-radius: .55rem;
+    border: none;
+    padding: 5px;
+}
+
+.screen > .play-section > #answer:focus{
+    outline: none;
+}
+
+.information-section
+{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    background-color: white;
+    position: absolute;
+    z-index: 2;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-family: var(--gameplay-font);
+    font-weight: bold;
+    color: white;
+}
+
+
+.submitAnswerBtn
+{
+    width: 100px;
+    height:30px;
+    border-radius: .55rem;
+    border: none;
+    cursor: pointer;
+}
+
+#timer
+{
+    width: 50px;
+    height: 50px;
+    border: 3px solid black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--gameplay-font);
+    font-size: 1.5rem;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.messages-screen
+{
+    width: 350px;
+    height: 200px;
+    border: 1px solid black;
+    position: absolute;
+    top: 30%;
+    left : 150px;
+    transform: translate(-30%, -30%);
+    box-shadow: 5px 5px 0px 0px black;
+    border-radius: .35rem;
+    padding: 30px 10px 10px 10px;
+    font-size: 1.3rem;
+    font-family: var(--gameplay-font);
+    overflow: hidden;
+    max-width: 44ch;
+    background-color: white;
+    font-weight: 700;
+}
+
+.messages-screen::before
+{
+    content: "Message Screen";
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15px;
+    background-color: black;
+    color: white;
+    width: 100%;
+    border-top-left-radius: .35rem;
+    border-top-right-radius: .35rem;
+    text-align: center;
+    font-family: var(--gameplay-font);
+}
+
+.navigation-buttons
+{
+    list-style-type: none;
+    position: absolute;
+    top: 0;
+    right: -60px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.navigation-buttons > li
+{
+    border: 2px solid black;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: white;
+}
+
+.navigation-buttons > li > img{
+    transition: ease-in 500ms;
+}
+
+.navigation-buttons > li:hover > img{
+    transform: scale(1.04);
+}

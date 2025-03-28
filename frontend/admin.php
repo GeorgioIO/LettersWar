@@ -32,7 +32,10 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 </svg>
                 </li>
             </ul>
-            <button id="logOutBtn">Logout</button>
+            <button id="logOutBtn">
+                Logout
+                <img src="../assets/images/door-open-svgrepo-com.svg" alt="log out icon">
+             </button>
         </nav>
         <div class="panel">
 

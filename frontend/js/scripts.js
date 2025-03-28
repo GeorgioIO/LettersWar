@@ -2,7 +2,7 @@ const closeOperationPanel = document.querySelector(".close-operation-panel");
 const operationPanel = document.querySelector(".operation-panel")
 const menuButtons = document.querySelectorAll(".menu ul li");
 const logOutBtn = document.getElementById("logOutBtn");
-
+const startGameBtn = document.getElementById("startGameBtn");
 
 // Ajax request to populate panel content by endpoint
 function loadPanel(page)

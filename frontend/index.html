@@ -7,28 +7,34 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/animations.css">
     <link rel="icon" href="../assets/images/Logo.svg" type="image/svg">
+    <script defer src="../frontend/js/scripts.js"></script>
+
 </head>
 <body>
     <header>
         <div class="logo">
-            <img src="/assets/images/Logo.svg" alt="letters war logo">
+            <img src="../assets/images/Logo.svg" alt="letters war logo">
             <h1 class="logo-text">Letters <span class="warText"><span class="orange">W</span>a<span class="green">R</span></span></h1>
         </div>
         <nav>
             <ul class="socials">
                 <li>
-                    <img src="/assets/images/github-142-svgrepo-com.svg" alt="github">
+                    <img src="../assets/images/github-142-svgrepo-com.svg" alt="github">
                 </li>
                 <li>
-                    <img src="/assets/images/instagram-svgrepo-com.svg" alt="instagram">
+                    <img src="../assets/images/instagram-svgrepo-com.svg" alt="instagram">
                 </li>
                 <li>
-                    <img src="/assets/images/linkedin-svgrepo-com.svg" alt="linkedin">
+                    <img src="../assets/images/linkedin-svgrepo-com.svg" alt="linkedin">
                 </li>
             </ul>
         </nav>
     </header>
     <main>
+        <div class="game-buttons">
+            <button id="startGameBtn">Start Game</button>
+            <button id="howToPlayBtn">How to play</button>
+        </div>
         <div class="dummy-board">
             <div class="cell">C</div>
             <div class="cell">N</div>
@@ -57,5 +63,11 @@
             <div class="cell">I</div>
         </div>
     </main>
+    <script>
+        // For Start game in index.html
+        startGameBtn.addEventListener("click" , (event) => {
+        window.location.href = "../frontend/game.php"
+    })
+    </script>
 </body>
 </html>

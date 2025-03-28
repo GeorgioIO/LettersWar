@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 *{
     padding: 0;
     margin: 0;
@@ -7,6 +9,9 @@
 
 :root{
     --logo-font: "Bangers", system-ui;
+    --gameplay-font : "Roboto", sans-serif;
+    --green: #00D407;
+    --orange:#FFA500 ;
 }
 
 html{
@@ -16,13 +21,11 @@ html{
 body{
     min-height: 100vh;
     width: 100%;
-    background-color: white;
     position: relative;
     overflow-x: hidden;
+    padding: 0px 100px;
 
-    
 }
-
 
 /* General Styles */
 .orange{
@@ -39,8 +42,7 @@ header{
     height: 20%;
     display: flex;
     justify-content: space-between;
-    padding: 10px 30px 10px 30px;
-
+    padding-top: 20px;
 }
 
 .logo{
@@ -93,9 +95,48 @@ nav > .socials
 
 main{
     height: 650px;
+    width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
+    align-items: center;  
+    gap: 30px;
+
+}
+
+.game-buttons
+{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-buttons > button{
+    width: 185px;
+    height: 45px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 1.5rem;
+    border: none;
+    color: white;
+    font-family: var(--gameplay-font);
+    transition: ease-in-out 500ms;
+    box-shadow: 0px 0px 50px 0px transparent;
+}
+
+.game-buttons > button:hover{
+    transform: scale(1.03);
+    box-shadow: 0px 0px 20px 0px rgba(128, 128, 128, 0.605);
+
+}
+
+.game-buttons > #startGameBtn
+{
+    background-color: var(--orange);
+}
+
+.game-buttons > #howToPlayBtn
+{
+    background-color: var(--green);
 }
 
 .dummy-board
@@ -111,8 +152,6 @@ main{
     border-bottom: 10px solid #00D407;
     border-right: 10px solid #FFA500;
     border-left: 10px solid #FFA500;
-    transform: translateX(1000px);
-    animation: dummyBoardPulse infinite 2s  , dummyBoardEnter ease-in-out forwards 700ms;
 }
 
 .cell

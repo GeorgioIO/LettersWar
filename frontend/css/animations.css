@@ -103,10 +103,61 @@
     
 }
 
+@keyframes hideInformationSection{
+    0%{
+        transform: translate(0);
+    }
+    100%{
+        transform: translateX(-800px);
+    }
+}
+
+@keyframes showInformationSection{
+    0%{
+        transform: translate(-800px);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+@keyframes hidePlaySection{
+    0%{
+        transform: translateX(0);
+    }
+    100%{
+        transform: translateX(800px);
+    }
+}
+
+@keyframes showPlaySection{
+    0%{
+        transform: translateX(800px);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+.showPlaySection{
+    animation: showPlaySection 500ms ease-in-out forwards;
+}
+
+.hidePlaySection{
+    animation: hidePlaySection 500ms ease-in-out forwards;
+}
+
+.hideInformationSection{
+    animation: hideInformationSection 500ms ease-in-out forwards;
+}
+
+.showInformationSection{
+    animation: showInformationSection 500ms ease-in-out forwards;
+}
+
 .operationMessageBar{
     animation: operationMessageBar 800ms ease-in-out forwards;
 }
-
 
 .showOperationMessage{
     animation: showOperationMessage 400ms ease-in-out forwards;
@@ -123,3 +174,4 @@
 .hideOperationPanel{
     animation: hideOperationPanel 400ms ease-in-out forwards;
 }
+

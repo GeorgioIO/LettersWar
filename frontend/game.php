@@ -7,7 +7,7 @@
     <link rel="icon" href="../assets/images/Logo.svg" type="image/svg">
     <link rel="stylesheet" href="../frontend/css/game.css">
     <link rel="stylesheet" href="./css/animations.css">
-    <script defer src="../frontend/js/game.js"></script>
+    <script defer type="module" src="../frontend/js/game.js"></script>
 </head>
 <body>
     <main>
@@ -29,7 +29,7 @@
         <div class="screen">
             <div class="information-section"></div>
             <div class="play-section">
-                <div id="timer">35</div>
+                <div id="timer"></div>
                 <p id="question">[question here]</p>
                 <input type="text" id="answer" name="answer" placeholder="Your answer here...">
                 <button class="submitAnswerBtn">Submit</button>

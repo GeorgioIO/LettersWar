@@ -2,11 +2,11 @@
 
 session_start();
 
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    // Redirect to the login page if not logged in
-    header("Location: ../frontend/login.php");
-    exit(); // Ensure no further code is executed after the redirect
-}
+// if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+//     // Redirect to the login page if not logged in
+//     header("Location: ../frontend/login.php");
+//     exit(); // Ensure no further code is executed after the redirect
+// }
 
 ?>
 

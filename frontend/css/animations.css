@@ -140,19 +140,19 @@
 }
 
 .showPlaySection{
-    animation: showPlaySection 500ms ease-in-out forwards;
+    animation: showPlaySection 400ms ease-in-out forwards;
 }
 
 .hidePlaySection{
-    animation: hidePlaySection 500ms ease-in-out forwards;
+    animation: hidePlaySection 400ms ease-in-out forwards;
 }
 
 .hideInformationSection{
-    animation: hideInformationSection 500ms ease-in-out forwards;
+    animation: hideInformationSection 400ms ease-in-out forwards;
 }
 
 .showInformationSection{
-    animation: showInformationSection 500ms ease-in-out forwards;
+    animation: showInformationSection 400ms ease-in-out forwards;
 }
 
 .operationMessageBar{

@@ -30,7 +30,7 @@ function initializeEventListeners()
 
     deleteQuestionList.addEventListener("click" , () => {
     showForm("delete");
-    })
+    }) 
 
     updateQuestionList.addEventListener("click" , () => {
     showForm("update");

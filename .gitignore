@@ -1,8 +1,0 @@
-config/*.php       # Config files  
-database/*.sql     # SQL database files  
-db_connect.php     # Database connection file  
-.env               # Environment variables (if used)  
-frontend/css/*.map  
-frontend/js/*.map  
-assets/images/
-tests/

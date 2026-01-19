@@ -90,7 +90,7 @@ let interfaceController = (function () {
       setMessageScreen(
         `Both Teams Failed to answer , Question will be changed`,
         "red",
-        2
+        2,
       );
 
       fetchQuestionPerCell(interfaceController.getActiveCell().innerHTML).then(
@@ -104,7 +104,7 @@ let interfaceController = (function () {
             resetMessageScreen();
             startTurn(interfaceController.getActiveCell());
           }, 2500);
-        }
+        },
       );
     } else {
       setMessageScreen(
@@ -112,7 +112,7 @@ let interfaceController = (function () {
           GameController.getActiveTeam().name
         } Failed to answer , Other team counter turn`,
         "red",
-        2
+        2,
       );
       GameController.switchturn("counter");
       timer.reset();
@@ -253,6 +253,8 @@ const GameController = (function () {
 
     // ! answer is CORRECT
     if (answer.toLowerCase() === question.answer.toLowerCase()) {
+      // stop the running timer since the question was answered
+      interfaceController.timer.reset();
       getActiveTeam().score++;
       const cellCode = interfaceController.getActiveCell().dataset.cellcode;
       const [row, col] = cellCode.split("-");
@@ -260,11 +262,11 @@ const GameController = (function () {
       interfaceController.arrayBoard.updateArrayBoardCell(
         row,
         col,
-        getActiveTeam().name
+        getActiveTeam().name,
       );
       interfaceController.uiBoard.updateUIBoardCell(
         cell,
-        getActiveTeam().hexcode
+        getActiveTeam().hexcode,
       );
 
       // Change color of answer box then reset it
@@ -272,10 +274,6 @@ const GameController = (function () {
       setTimeout(() => {
         document.querySelector("#answer").style.backgroundColor = "white";
         document.querySelector("#answer").value = "";
-        if (!getGameState()) {
-          setWaitingScreen(GameController.getActiveTeam());
-        }
-        showWaitSection();
       }, 1000);
 
       setMessageScreen(
@@ -283,7 +281,7 @@ const GameController = (function () {
           GameController.getActiveTeam().name
         } Answered correctly , they capture the cell`,
         `${GameController.getActiveTeam().hexcode}`,
-        2
+        2,
       );
 
       // Check win
@@ -294,13 +292,13 @@ const GameController = (function () {
           setMessageScreen(
             `Orange has conquered the board, securing a path from left to right!`,
             `${GameController.getActiveTeam().hexcode}`,
-            10
+            10,
           );
         } else {
           setMessageScreen(
             `Green has conquered the board, securing a path from top to bottom!`,
             `${GameController.getActiveTeam().hexcode}`,
-            10
+            10,
           );
         }
         setWaitingScreen(GameController.getActiveTeam(), "win");
@@ -312,7 +310,7 @@ const GameController = (function () {
           setMessageScreen(
             "Orange Won by capturing more cells",
             teams[0].hexcode,
-            10
+            10,
           );
           setWaitingScreen(teams[0], "win");
           showWaitSection();
@@ -321,7 +319,7 @@ const GameController = (function () {
           setMessageScreen(
             "Green Won by capturing more cells",
             teams[1].hexcode,
-            10
+            10,
           );
           setWaitingScreen(teams[1], "win");
           showWaitSection();
@@ -333,11 +331,12 @@ const GameController = (function () {
         }
         return;
       } else {
+        switchturn();
+        setWaitingScreen(GameController.getActiveTeam());
+        showWaitSection();
         setTimeout(() => {
           resetMessageScreen();
         }, 2500);
-
-        switchturn();
       }
     }
     // ! answer is INCORRECT
@@ -354,11 +353,11 @@ const GameController = (function () {
         setMessageScreen(
           `Both team coudln't answer , Question will be changed...`,
           `red`,
-          2
+          2,
         );
         // reset the question
         const question = await fetchQuestionPerCell(
-          interfaceController.getActiveCell().innerHTML
+          interfaceController.getActiveCell().innerHTML,
         );
         GameController.setQuestion(question);
         setQuestionToScreen(question.question_text);
@@ -369,7 +368,7 @@ const GameController = (function () {
             GameController.getActiveTeam().name
           } Answered incorrectly , The other team have a chance to capture the cell`,
           `red`,
-          2
+          2,
         );
         switchturn("counter");
       }
@@ -377,38 +376,8 @@ const GameController = (function () {
         resetMessageScreen();
       }, 2500);
 
-      interfaceController.timer.startTimer(async () => {
-        increaseQuestionAttempts();
-        if (getQuestionAttempts() >= 2) {
-          resetQuestionAttempts();
-          setMessageScreen(
-            `Both Teams Failed to answer , Question will be changed`,
-            "red",
-            2
-          );
-          // reset question
-          const question = await fetchQuestionPerCell(
-            interfaceController.getActiveCell().innerHTML
-          );
-          setQuestion(question);
-          setQuestionToScreen(question.question_text);
-          Controller.switchturn();
-        } else {
-          setMessageScreen(
-            `${
-              GameController.getActiveTeam().name
-            } Failed to answer , Other team counter turn`,
-            "red",
-            2
-          );
-          switchturn("counter");
-        }
-        timer.reset();
-
-        setTimeout(() => {
-          resetMessageScreen();
-        }, 2500);
-      });
+      // restart timer using the shared timeout handler so the other team gets a chance
+      interfaceController.timer.startTimer(handleTimeUp);
     }
   };
 

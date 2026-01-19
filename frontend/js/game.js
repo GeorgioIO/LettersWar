@@ -102,7 +102,10 @@ let interfaceController = (function () {
 
           setTimeout(() => {
             resetMessageScreen();
-            startTurn(interfaceController.getActiveCell());
+            // new question for next team on same active cell
+            startTurn(interfaceController.getActiveCell(), {
+              reuseQuestion: true,
+            });
           }, 2500);
         },
       );
@@ -119,17 +122,25 @@ let interfaceController = (function () {
 
       setTimeout(() => {
         resetMessageScreen();
-        startTurn(interfaceController.getActiveCell());
+        // counter team answers the SAME question on the SAME cell
+        startTurn(interfaceController.getActiveCell(), { reuseQuestion: true });
       }, 2500);
     }
   }
 
-  async function startTurn(cell) {
-    GameController.resetQuestionAttempts();
-
-    const question = await fetchQuestionPerCell(cell.innerHTML);
-    GameController.setQuestion(question);
-    setQuestionToScreen(question.question_text);
+  async function startTurn(cell, { reuseQuestion = false } = {}) {
+    // Only reset attempts when we are starting a fresh question (new pick / new question)
+    if (!reuseQuestion) {
+      GameController.resetQuestionAttempts();
+      const question = await fetchQuestionPerCell(cell.innerHTML);
+      GameController.setQuestion(question);
+      setQuestionToScreen(question.question_text);
+    } else {
+      const currentQuestion = GameController.getQuestion();
+      if (currentQuestion) {
+        setQuestionToScreen(currentQuestion.question_text);
+      }
+    }
 
     const allCells = document.querySelectorAll(".cell");
     uiBoard.setCellColor(allCells, cell);
@@ -148,7 +159,7 @@ let interfaceController = (function () {
     return null;
   };
 
-  return { generateBoard, getActiveCell, uiBoard, arrayBoard, timer };
+  return { generateBoard, getActiveCell, startTurn, uiBoard, arrayBoard, timer };
 })();
 
 const GameController = (function () {
@@ -260,8 +271,8 @@ const GameController = (function () {
       const [row, col] = cellCode.split("-");
       const cell = document.querySelector('[data-active="true"]');
       interfaceController.arrayBoard.updateArrayBoardCell(
-        row,
-        col,
+        parseInt(row, 10),
+        parseInt(col, 10),
         getActiveTeam().name,
       );
       interfaceController.uiBoard.updateUIBoardCell(
@@ -341,6 +352,8 @@ const GameController = (function () {
     }
     // ! answer is INCORRECT
     else {
+      // stop/reset current team's timer immediately so counter team gets full time
+      interfaceController.timer.reset();
       increaseQuestionAttempts();
       // Change color of answer box then reset it
       document.querySelector("#answer").style.backgroundColor = "red";
@@ -372,12 +385,15 @@ const GameController = (function () {
         );
         switchturn("counter");
       }
+
+      // Give the other team a FULL timer AFTER the message delay
+      interfaceController.timer.reset();
       setTimeout(() => {
         resetMessageScreen();
+        interfaceController.startTurn(interfaceController.getActiveCell(), {
+          reuseQuestion: true,
+        });
       }, 2500);
-
-      // restart timer using the shared timeout handler so the other team gets a chance
-      interfaceController.timer.startTimer(handleTimeUp);
     }
   };
 

@@ -27,7 +27,7 @@ function initializeEventListeners()
     let addQuestionList = document.getElementById("addBtnList");
     let updateQuestionList = document.getElementById("updateBtnList");
     let deleteQuestionList = document.getElementById("deleteBtnList");
-
+x
     deleteQuestionList.addEventListener("click" , () => {
     showForm("delete");
     }) 

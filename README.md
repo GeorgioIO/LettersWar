@@ -8,13 +8,4 @@ LettersWar is a web trivia game where two teams Orange and Green fight over a 5x
 
 To win there are two cases normal win where either the orange capture a path from left to right or green from top to bottom.
 in case of draw where no team captured a path , the team that captured the most cells wins.
-<<<<<<< HEAD
-=======
-
-### Orange winning case :
-![Orange Won](assets/images/orange-won.png)
-
-
-### Green winning case : 
-![Green Won](assets/images/green-won.png)
->>>>>>> dbe8fb14cefd6dc87540747ce0e495af94d91156
+aa
